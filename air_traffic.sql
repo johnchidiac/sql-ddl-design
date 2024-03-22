@@ -22,9 +22,7 @@ CREATE TABLE countries(
 
 CREATE TABLE tickets(
   id serial PRIMARY KEY,
-  first_name varchar(30) NOT NULL,
-  last_name varchar(30) NOT NULL,
-  seat varchar(30) NOT NULL,
+  passenger_id integer NOT NULL REFERENCES passengers seat varchar(30) NOT NULL,
   departure timestamp NOT NULL,
   arrival timestamp NOT NULL,
   airline integer NOT NULL REFERENCES airlines,
@@ -75,15 +73,31 @@ INSERT INTO cities(name)
 ('Sao Paolo'),
 ('Santiago');
 
-INSERT INTO tickets(first_name, last_name, seat, departure, arrival, airline, from_city, from_country, to_city, to_country)
-  VALUES ('Jennifer', 'Finch', '33B', '2018-04-08 09:00:00', '2018-04-08 12:00:00', 1, 1, 1, 2, 1),
-('Thadeus', 'Gathercoal', '8A', '2018-12-19 12:45:00', '2018-12-19 16:15:00', 2, 3, 2, 4, 3),
-('Sonja', 'Pauley', '12F', '2018-01-02 07:00:00', '2018-01-02 08:03:00', 3, 4, 1, 5, 1),
-('Jennifer', 'Finch', '20A', '2018-04-15 16:50:00', '2018-04-15 21:00:00', 3, 2, 1, 6, 4),
-('Waneta', 'Skeleton', '23D', '2018-08-01 18:30:00', '2018-08-01 21:50:00', 4, 7, 5, 8, 6),
-('Thadeus', 'Gathercoal', '18C', '2018-10-31 01:15:00', '2018-10-31 12:55:00', 5, 8, 7, 9, 8),
-('Berkie', 'Wycliff', '9E', '2019-02-06 06:00:00', '2019-02-06 07:47:00', 1, 10, 1, 11, 1),
-('Alvin', 'Leathes', '1A', '2018-12-22 14:42:00', '2018-12-22 15:56:00', 6, 12, 1, 13, 1),
-('Berkie', 'Wycliff', '32B', '2019-02-06 16:28:00', '2019-02-06 19:18:00', 6, 12, 1, 14, 1),
-('Cory', 'Squibbes', '10D', '2019-01-20 19:30:00', '2019-01-20 22:45:00', 7, 15, 9, 16, 10);
+-- add a Passengers table
+CREATE TABLE passengers(
+  id serial PRIMARY KEY first_name varchar(30) NOT NULL,
+  last_name varchar(30) NOT NULL
+);
+
+INSERT INTO passengers(first_name, last_name)
+  VALUES ('Jennifer', 'Finch'),
+('Thadeus', 'Gathercoal'),
+('Sonja', 'Pauley'),
+('Waneta', 'Skeleton'),
+('Berkie', 'Wycliff'),
+('Alvin', 'Leathes'),
+('Berkie', 'Wycliff'),
+('Cory', 'Squibbes');
+
+INSERT INTO tickets(passenger_id, seat, departure, arrival, airline, from_city, from_country, to_city, to_country)
+  VALUES (1, '33B', '2018-04-08 09:00:00', '2018-04-08 12:00:00', 1, 1, 1, 2, 1),
+(2, '8A', '2018-12-19 12:45:00', '2018-12-19 16:15:00', 2, 3, 2, 4, 3),
+(3, '12F', '2018-01-02 07:00:00', '2018-01-02 08:03:00', 3, 4, 1, 5, 1),
+(1, '20A', '2018-04-15 16:50:00', '2018-04-15 21:00:00', 3, 2, 1, 6, 4),
+(4, '23D', '2018-08-01 18:30:00', '2018-08-01 21:50:00', 4, 7, 5, 8, 6),
+(2, '18C', '2018-10-31 01:15:00', '2018-10-31 12:55:00', 5, 8, 7, 9, 8),
+(5, '9E', '2019-02-06 06:00:00', '2019-02-06 07:47:00', 1, 10, 1, 11, 1),
+(6, '1A', '2018-12-22 14:42:00', '2018-12-22 15:56:00', 6, 12, 1, 13, 1),
+(5, '32B', '2019-02-06 16:28:00', '2019-02-06 19:18:00', 6, 12, 1, 14, 1),
+(7, '10D', '2019-01-20 19:30:00', '2019-01-20 22:45:00', 7, 15, 9, 16, 10);
 
